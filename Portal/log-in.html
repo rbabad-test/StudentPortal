@@ -74,7 +74,7 @@
                         const data = await response.json();                        
                         if (response.ok) {
                             // Success! Send user to the dashboard
-                            window.location.href = '/dashboard.html';
+                            window.location.href = 'Portal/student/dashboard.html';
                         } else {
                             // Show error message from the server
                             errorElement.textContent = data.message;
