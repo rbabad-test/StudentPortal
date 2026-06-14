@@ -33,12 +33,12 @@
 
             <form class="text-left">
                 <div class="mb-5">
-                    <label class="block mb-2 text-[#444] font-semibold text-sm" for="username">Student Number</label>
+                    <label class="block mb-2 text-[#444] font-semibold text-sm" for="username" id="username">Student Number</label>
                     <input class="w-full p-3.5 border-2 border-gray-200 rounded-xl text-base transition-all focus:border-[#2575fc] focus:outline-none focus:ring-4 focus:ring-[#2575fc]/10" type="text" id="username" placeholder="Enter your Student Number" required name="username" />
                 </div>
 
                 <div class="mb-5">
-                    <label class="block mb-2 text-[#444] font-semibold text-sm" for="password">Password</label>
+                    <label class="block mb-2 text-[#444] font-semibold text-sm" for="password" id="password">Password</label>
                     <input class="w-full p-3.5 border-2 border-gray-200 rounded-xl text-base transition-all focus:border-[#2575fc] focus:outline-none focus:ring-4 focus:ring-[#2575fc]/10" type="password" id="password" placeholder="Enter your password" required name="password" />
                 </div>
 
@@ -58,6 +58,32 @@
                     Student Login
                 </button>
             </form>
+            <script>
+                document.getElementById('loginForm').addEventListener('submit', async (e) => {
+                    e.preventDefault(); // Prevents the default HTML form submission
+                    const username = document.getElementById('username').value;
+                    const password = document.getElementById('password').value;
+                    const errorElement = document.getElementById('errorMessage');            
+                    try {                
+                        // Send credentials to the backend server
+                        const response = await fetch('/api/login', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ username, password })                
+                        });
+                        const data = await response.json();                        
+                        if (response.ok) {
+                            // Success! Send user to the dashboard
+                            window.location.href = '/dashboard.html';
+                        } else {
+                            // Show error message from the server
+                            errorElement.textContent = data.message;
+                        }
+                    } catch (err) {
+                        errorElement.textContent = "Cannot connect to the server.";
+                    }        
+                });    
+            </script>
 
             <a class="inline-block mt-6 text-[#2575fc] text-sm hover:underline" href="/Portal/forgot-password">Forgot Password?</a>
             
