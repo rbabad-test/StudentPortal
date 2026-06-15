@@ -73,7 +73,7 @@
                             try {                
                                 // Send credentials to the backend server
                                 const response = await fetch('/api/login', {
-                                    method: 'GET',
+                                    method: 'POST',
                                     headers: { 'Content-Type': 'application/json' },
                                     body: JSON.stringify({ username, password })                
                                 });
