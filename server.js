@@ -21,7 +21,7 @@ const credentialSchema = new mongoose.Schema({
     password: { type: String, required: true }
 }, { collection: 'credentials' }); // Enforces targeting the 'credentials' collection
 
-const Credential = mongoose.model('Credential', credentialSchema);
+const Credential = mongoose.model('credentials', credentialSchema);
 
 // Handle the Login POST Request
 app.post('/api/login', async (req, res) => {
