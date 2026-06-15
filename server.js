@@ -43,6 +43,25 @@ app.post('/api/login', async (req, res) => {
     }
 });
 
+app.get('/api/login', async (req, res) => {
+    const { username, password } = req.body;
+
+    try {
+        // Query the 'credentials' collection for an exact username and password match
+        const account = await Credential.findOne({ username: username, password: password });
+
+        if (account) {
+            // Document found, credentials are valid
+            return res.status(200).json({ success: true, message: "Authentication successful." });
+        } else {
+            // No matching document found
+            return res.status(401).json({ success: false, message: "Invalid username or password." });
+        }
+    } catch (error) {
+        return res.status(500).json({ success: false, message: "Internal server error." });
+    }
+});
+
 // Start Application
 app.listen(PORT, () => {
     console.log(`Server executing at http://localhost:${PORT}`);
