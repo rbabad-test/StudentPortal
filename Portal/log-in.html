@@ -28,7 +28,7 @@
         </div>
         <div class="min-h-screen w-full flex justify-center items-center p-5 transition-all duration-500 bg-[linear-gradient(135deg,#f80c0c_0%,#b9da02_100%)]">
             <div class="relative w-full max-w-[450px] bg-white/95 backdrop-blur-[10px] rounded-[30px] shadow-[0_15px_35px_rgba(0,0,0,0.2)] p-10 text-center">
-                <a class="absolute top-5 left-5 flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-200/50 transition-all z-50 text-gray-600" aria-label="Back to home" href="/index.html">
+                <a class="absolute top-5 left-5 flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-200/50 transition-all z-50 text-gray-600" aria-label="Back to home" href="StudentPortal/index.html">
                     <span class="text-2xl font-bold">←</span>
                 </a>
                 <div class="mb-6">
@@ -63,6 +63,7 @@
                     </div>
                     <button type="submit" class="w-full p-4 text-white font-bold text-lg rounded-xl shadow-lg transition-all hover:-translate-y-0.5 active:translate-y-0 bg-[linear-gradient(to_right,#6a11cb,#2575fc)] shadow-blue-500/30">Student Login</button>
                 </form>
+                <p id="errorMessage" style="color: red;"></p>
                 <script>
                         document.getElementById('loginForm').addEventListener('submit', async (e) => {
                             e.preventDefault(); // Prevents the default HTML form submission

@@ -56,6 +56,9 @@ app.get('/api/login', async (req, res) => {
         } else {
             // No matching document found
             return res.status(401).json({ success: false, message: "Invalid username or password." });
+        }} else {
+            // No matching document found
+            return res.status(405).json({ success: false, message: "Method not allowed." });
         }
     } catch (error) {
         return res.status(500).json({ success: false, message: "Internal server error." });
