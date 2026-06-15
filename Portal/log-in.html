@@ -66,29 +66,49 @@
                 <p id="errorMessage" style="color: red;"></p>
                 <script>
                         document.getElementById('loginForm').addEventListener('submit', async (e) => {
-                            e.preventDefault(); // Prevents the default HTML form submission
-                            const username = document.getElementById('username').value;
-                            const password = document.getElementById('password').value;
-                            const errorElement = document.getElementById('errorMessage');            
-                            try {                
-                                // Send credentials to the backend server
-                                const response = await fetch('/api/login', {
-                                    method: 'POST',
-                                    headers: { 'Content-Type': 'application/json' },
-                                    body: JSON.stringify({ username, password })                
-                                });
-                                const data = await response.json();                        
-                                if (response.ok) {
-                                    // Success! Send user to the dashboard
-                                    window.location.href = 'student/dashboard.html';
+                        e.preventDefault(); // Prevents the default HTML form submission
+                        
+                        const username = document.getElementById('username').value;
+                        const password = document.getElementById('password').value;
+                        const errorElement = document.getElementById('errorMessage');            
+                        
+                        // 1. Fix: Clear any old error message when a new attempt begins
+                        if (errorElement) {
+                            errorElement.textContent = "";
+                        }
+
+                        try {                
+                            // Send credentials to the backend server
+                            const response = await fetch('/api/login', {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ username, password })                
+                            });
+                            
+                            const data = await response.json();                        
+                            
+                            if (response.ok) {
+                                // Success! Send user to the dashboard
+                                window.location.href = 'student/dashboard.html';
+                            } else {
+                                // 2. Fix: Check if errorElement exists before updating it, with a message fallback
+                                const fallbackMessage = data.message || "Invalid credentials.";
+                                if (errorElement) {
+                                    errorElement.textContent = fallbackMessage;
                                 } else {
-                                    // Show error message from the server
-                                    errorElement.textContent = data.message;
+                                    alert(fallbackMessage); // Fail-safe if element is missing from HTML
                                 }
-                            } catch (err) {
-                                errorElement.textContent = "Cannot connect to the server.";
-                            }        
-                        });    
+                            }
+                        } catch (err) {
+                            // 3. Fix: Fail-safe check for the catch block too
+                            const networkErrorMessage = "Cannot connect to the server.";
+                            if (errorElement) {
+                                errorElement.textContent = networkErrorMessage;
+                            } else {
+                                console.error(networkErrorMessage, err);
+                            }
+                        }        
+                    });    
                 </script>
                 <a class="inline-block mt-6 text-[#2575fc] text-sm hover:underline" href="/Portal/forgot-password">Forgot Password?</a>
             </div>
